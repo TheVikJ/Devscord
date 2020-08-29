@@ -203,6 +203,9 @@ async def on_message(message):
                 'Photography, Science&Math, Security, Shopping, Social, Sports&Fitness, TestData'
                 'TextAnalysis, Tracking, Transportation, URLShorteners, Vehicle, Video, Weather.')
 
+    if message.content.startswith('!api-random'):
+        await message.channel.send(requests.get('https://api.publicapis.org/random?auth=null').text)
+           
 @client.event
 async def on_ready():
     print('Logged in as')
