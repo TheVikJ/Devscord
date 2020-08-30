@@ -56,8 +56,8 @@ async def on_message(message):
         await message.channel.send(requests.get(url).text)
 
     if message.content.startswith('!stack-search'):
-        searchterms = message.content
-        searchterms = searchterms.replace('!stack-search ', '')
+        searchterm = message.content
+        searchterms = searchterm.replace('!stack-search ', '')
         r = requests.get('https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle=' + searchterms + '&site=stackoverflow').text
         if len(r) > 2000:
             msg = ''
@@ -66,13 +66,15 @@ async def on_message(message):
                 AllQ = Find(msg)
                 AllQ = [i for i in AllQ if 'questions' in i]             
                 
-                outputstring = "For your search for the following search terms:", searchterms + " We could find the following related links:"
+                outputstring = "For your search for the following search terms: " 
+                outputstring += searchterm 
+                outputstring += " , we could find the following related links: "
                 for i in range (len(AllQ)-1):
-                    outputstring += "Link " 
-                    outputstring += str(i+1) 
-                    outputstring += ":" 
-                    outputstring += str(AllQ(i))
-                    outputstring += '\n'
+                  index  = str(i+1)                
+                  outputstring += "Link " 
+                  outputstring += index 
+                  outputstring += ":" 
+                  outputstring += str(AllQ[i])
                 
         await message.channel.send(outputstring)
 
