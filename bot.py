@@ -20,8 +20,8 @@ async def on_message(message):
         return
 
     if message.content.startswith('!api-category'):
-        search = message.content
-        search = search.replace('!api-category ', '')
+        searchX = message.content
+        search = searchX.replace('!api-category ', '')
         searchterms = ''.join([i for i in search if not i.isdigit()])
 
         if searchterms == '':
@@ -38,13 +38,21 @@ async def on_message(message):
             url = 'https://api.publicapis.org/entries?category=' + searchterms + '&https=true'
             r = requests.get(url).text
             msg = ''
-            if len(r)>2000:
-                for i in range(0, 1999):
+            for i in range(0, 1999):
                     msg += r[i]
-            else:
-                msg = r
-            await message.channel.send(msg)
-
+                AllA = Find(msg)
+                
+            outputstring = "Here are some APIs from the "
+            outputstring += searchX
+            outputstring += " category: "
+            for i in range (len(AllA)-1):
+                index  = str(i+1)                
+                  outputstring += "Link " 
+                  outputstring += index 
+                  outputstring += ":" 
+                  outputstring += str(AllA[i])
+            await message.channel.send(outputstring)
+            
     if message.content.startswith('!api-random'):
         await message.channel.send(requests.get('https://api.publicapis.org/random?auth=null').text)
 
