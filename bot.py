@@ -10,9 +10,6 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith('!hello'):
-        await message.channel.send('Hello {0.author.mention}'.format(message))
-
     if message.content.startswith('!api-category'):
         if message.content.startswith('!api-category animals'):
             await message.channel.send(requests.get('https://api.publicapis.org/entries?category=animals&https=true').text)
