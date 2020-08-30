@@ -44,7 +44,22 @@ async def on_message(message):
                     msg += r[i]
             else:
                 msg = r
-            await message.channel.send(msg)
+            
+            AllA = Find(msg)
+                
+            outputstring = "Here are some APIs from the "
+            outputstring += searchX
+            outputstring += " category: "
+            for i in range (len(AllA)-1):
+                index  = str(i+1)                
+                outputstring += "Link " 
+                outputstring += index 
+                outputstring += ": " 
+                outputstring += str(AllA[i])
+                outputstring += " \n"
+                
+            await message.channel.send(outputstring)
+            
 
     if message.content.startswith('!api-random'):
         await message.channel.send(requests.get('https://api.publicapis.org/random?auth=null').text)
