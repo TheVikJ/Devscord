@@ -71,18 +71,18 @@ async def on_message(message):
             msg = ''
             for i in range(0, 1999):
                 msg += r[i]
-            AllQ = Find(msg)
-            AllQ = [i for i in AllQ if 'questions' in i]             
-                
-            outputstring = "For your search for the following search terms: " 
-            outputstring += searchterm 
-            outputstring += " , we could find the following related links: "
-            for i in range (len(AllQ)-1):
-              index  = str(i+1)                
-              outputstring += "Link " 
-              outputstring += index 
-              outputstring += ":" 
-              outputstring += str(AllQ[i])
+              AllQ = Find(msg)
+              AllQ = [i for i in AllQ if 'questions' in i]             
+                  
+              outputstring = "For your search for the following search terms: " 
+              outputstring += searchterm 
+              outputstring += " , we could find the following related links: "
+              for i in range (len(AllQ)-1):
+                index  = str(i+1)                
+                outputstring += "Link " 
+                outputstring += index 
+                outputstring += ":" 
+                outputstring += str(AllQ[i])
                 
         await message.channel.send(outputstring)
 
