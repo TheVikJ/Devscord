@@ -216,7 +216,7 @@ async def on_message(message):
     if message.content.startswith('!stack-search'):
         searchterms = message.content
         searchterms = searchterms.replace('!stack-search ', '')
-        msg = requests.get('https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle=' + searchterms + '&site=stackoverflow')
+        msg = requests.get('https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle=' + searchterms + '&site=stackoverflow').text
         await message.channel.send(msg)
            
 @client.event
