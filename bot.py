@@ -212,6 +212,12 @@ async def on_message(message):
         desc = desc.replace(minus, '')
         url = 'https://api.publicapis.org/entries?description=' + desc + '&https=true'
         await message.channel.send(requests.get(url).text)
+        
+    if message.content.startswith('!stack-search'):
+        searchterms = message.content
+        searchterms = searchterms.replace('!stack-search ', '')
+        msg = requests.get('https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle=' + searchterms + '&site=stackoverflow')
+        await message.channel.send(msg)
            
 @client.event
 async def on_ready():
