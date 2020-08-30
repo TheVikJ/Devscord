@@ -1,6 +1,15 @@
 import discord
 import requests
 
+import re 
+  
+def Find(string): 
+  
+    regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
+    url = re.findall(regex,string)       
+    return [x[0] for x in url] 
+      
+
 TOKEN = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 
 client = discord.Client()
@@ -47,14 +56,32 @@ async def on_message(message):
         await message.channel.send(requests.get(url).text)
 
     if message.content.startswith('!stack-search'):
-        msg = ''
         searchterms = message.content
         searchterms = searchterms.replace('!stack-search ', '')
-        r = requests.get('https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle=' + searchterms + '&site=stackoverflow').text
+        r = requests.get('https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle=' + searchterms + '&site=stackoverflow')
         if len(r) > 2000:
             for i in range(0, 1999):
                 msg += r[i]
-        await message.channel.send(msg)
+                AllQ = Find(msg)
+                AllQ = [i for i in AllQ if 'questions' in i]
+                CutQ=[]
+                tot = 150
+                for i in range(len(AllQ)-1):
+                    tot += (len(AllQ[i]) + 5)
+                    if tot >= 2000:
+                        break
+                    else:
+                        CutQ.append(AllQ[i])                
+                
+                outputstring = "For your search for the following search terms:", searchterms + " We could find the following related links:"
+                for i in range (len(CutQ)-1):
+                    outputstring += "Link " 
+                    outputstring += str(i+1) 
+                    outputstring += ":" 
+                    outputstring += str(CutQ(i))
+                    outputstring += '\n'
+                
+        await message.channel.send(outputstring)
 
 @client.event
 async def on_ready():
