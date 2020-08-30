@@ -77,6 +77,7 @@ async def on_message(message):
                     outputstring += index
                     outputstring += ":"
                     outputstring += str(AllQ[i])
+                    outputstring += " \n "
 
         await message.channel.send(outputstring)
 
