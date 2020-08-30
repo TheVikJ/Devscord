@@ -64,22 +64,14 @@ async def on_message(message):
             for i in range(0, 1999):
                 msg += r[i]
                 AllQ = Find(msg)
-                AllQ = [i for i in AllQ if 'questions' in i]
-                CutQ=[]
-                tot = 150
-                for i in range(len(AllQ)-1):
-                    tot += (len(AllQ[i]) + 5)
-                    if tot >= 2000:
-                        break
-                    else:
-                        CutQ.append(AllQ[i])                
+                AllQ = [i for i in AllQ if 'questions' in i]             
                 
                 outputstring = "For your search for the following search terms:", searchterms + " We could find the following related links:"
-                for i in range (len(CutQ)-1):
+                for i in range (len(AllQ)-1):
                     outputstring += "Link " 
                     outputstring += str(i+1) 
                     outputstring += ":" 
-                    outputstring += str(CutQ(i))
+                    outputstring += str(AllQ(i))
                     outputstring += '\n'
                 
         await message.channel.send(outputstring)
