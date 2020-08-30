@@ -71,8 +71,8 @@ async def on_message(message):
             msg = ''
             for i in range(0, 1999):
                 msg += r[i]
-                AllQ = Find(msg)
-                AllQ = [i for i in AllQ if 'questions' in i]             
+            AllQ = Find(msg)
+            AllQ = [i for i in AllQ if 'questions' in i]             
                 
                 outputstring = "For your search for the following search terms: " 
                 outputstring += searchterm 
