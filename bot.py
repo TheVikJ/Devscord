@@ -49,10 +49,10 @@ async def on_message(message):
                 
             outputstring = "Here are some APIs from the "
             outputstring += searchX
-            outputstring += " category: "
+            outputstring += " category: \n"
             for i in range (len(AllA)-1):
                 index  = str(i+1)                
-                outputstring += "Link " 
+                outputstring += "\n Link " 
                 outputstring += index 
                 outputstring += ": " 
                 outputstring += str(AllA[i])
