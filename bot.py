@@ -58,7 +58,11 @@ async def on_message(message):
             await message.channel.send(outputstring)
 
     if message.content.startswith('!api-random'):
-        await message.channel.send(requests.get('https://api.publicapis.org/random?auth=null').text)
+        Link = Find(requests.get('https://api.publicapis.org/random?auth=null').text)
+        outputstring = "Here's a random API! \n"
+        outputstring += Link[0]
+
+        await message.channel.send(outputstring)
 
     if message.content.startswith('!api-search'):
         desc = message.content
