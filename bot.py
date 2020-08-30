@@ -205,6 +205,13 @@ async def on_message(message):
 
     if message.content.startswith('!api-random'):
         await message.channel.send(requests.get('https://api.publicapis.org/random?auth=null').text)
+        
+    if message.content.startswith('!api-search'):
+        desc = message.content
+        minus = '!api-search '
+        desc = desc.replace(minus, '')
+        url = 'https://api.publicapis.org/entries?description=' + desc + '&https=true'
+        await message.channel.send(requests.get(url).text)
            
 @client.event
 async def on_ready():
