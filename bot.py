@@ -74,7 +74,23 @@ async def on_message(message):
                 msg += r[i]
         else:
             msg = r
-        await message.channel.send(msg)
+        
+        AllAPIs = Find(msg)
+        
+        outputstring = "Here are some APIs related to "
+        outputstring += desc
+        outputstring += ": \n"
+        
+        for i in range (len(AllAPIs)-1):
+            index  = str(i+1)                
+            outputstring += "Link " 
+            outputstring += index 
+            outputstring += ": " 
+            outputstring += str(AllAPIs[i])
+            outputstring += " \n"
+            
+        await message.channel.send(outputstring)
+        
 
     if message.content.startswith('!stack-search'):
         searchterm = message.content
