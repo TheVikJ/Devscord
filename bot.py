@@ -1,18 +1,19 @@
 import discord
 import requests
 
-import re 
-  
-def Find(string): 
-  
-    regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
-    url = re.findall(regex,string)       
-    return [x[0] for x in url] 
-      
+import re
 
-TOKEN = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+
+def Find(string):
+    regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
+    url = re.findall(regex, string)
+    return [x[0] for x in url]
+
+
+TOKEN = 'XXXXXXXXXXXXXXXXXXXXXXX'
 
 client = discord.Client()
+
 
 @client.event
 async def on_message(message):
@@ -20,8 +21,8 @@ async def on_message(message):
         return
 
     if message.content.startswith('!api-category'):
-        searchX = message.content
-        search = searchX.replace('!api-category ', '')
+        search = message.content
+        search = search.replace('!api-category ', '')
         searchterms = ''.join([i for i in search if not i.isdigit()])
 
         if searchterms == '':
@@ -38,21 +39,13 @@ async def on_message(message):
             url = 'https://api.publicapis.org/entries?category=' + searchterms + '&https=true'
             r = requests.get(url).text
             msg = ''
-            for i in range(0, 1999):
+            if len(r) > 2000:
+                for i in range(0, 1999):
                     msg += r[i]
-                AllA = Find(msg)
-                
-            outputstring = "Here are some APIs from the "
-            outputstring += searchX
-            outputstring += " category: "
-            for i in range (len(AllA)-1):
-                index  = str(i+1)                
-                  outputstring += "Link " 
-                  outputstring += index 
-                  outputstring += ":" 
-                  outputstring += str(AllA[i])
-            await message.channel.send(outputstring)
-            
+            else:
+                msg = r
+            await message.channel.send(msg)
+
     if message.content.startswith('!api-random'):
         await message.channel.send(requests.get('https://api.publicapis.org/random?auth=null').text)
 
@@ -66,25 +59,27 @@ async def on_message(message):
     if message.content.startswith('!stack-search'):
         searchterm = message.content
         searchterms = searchterm.replace('!stack-search ', '')
-        r = requests.get('https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle=' + searchterms + '&site=stackoverflow').text
+        r = requests.get(
+            'https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle=' + searchterms + '&site=stackoverflow').text
         if len(r) > 2000:
             msg = ''
             for i in range(0, 1999):
                 msg += r[i]
-              AllQ = Find(msg)
-              AllQ = [i for i in AllQ if 'questions' in i]             
-                  
-              outputstring = "For your search for the following search terms: " 
-              outputstring += searchterm 
-              outputstring += " , we could find the following related links: "
-              for i in range (len(AllQ)-1):
-                index  = str(i+1)                
-                outputstring += "Link " 
-                outputstring += index 
-                outputstring += ":" 
-                outputstring += str(AllQ[i])
-                
+                AllQ = Find(msg)
+                AllQ = [i for i in AllQ if 'questions' in i]
+
+                outputstring = "For your search for the following search terms: "
+                outputstring += searchterm
+                outputstring += " , we could find the following related links: "
+                for i in range(len(AllQ) - 1):
+                    index = str(i + 1)
+                    outputstring += "Link "
+                    outputstring += index
+                    outputstring += ":"
+                    outputstring += str(AllQ[i])
+
         await message.channel.send(outputstring)
+
 
 @client.event
 async def on_ready():
@@ -92,5 +87,6 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
+
 
 client.run(TOKEN)
