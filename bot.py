@@ -73,11 +73,12 @@ async def on_message(message):
                 outputstring += " , we could find the following related links: "
                 for i in range(len(AllQ) - 1):
                     index = str(i + 1)
+                    outputstring += " \n"
                     outputstring += "Link "
                     outputstring += index
-                    outputstring += ":"
+                    outputstring += ": "
                     outputstring += str(AllQ[i])
-                    outputstring += " \n "
+                    outputstring += " \n"
 
         await message.channel.send(outputstring)
 
