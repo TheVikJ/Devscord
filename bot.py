@@ -47,9 +47,10 @@ async def on_message(message):
         await message.channel.send(requests.get(url).text)
 
     if message.content.startswith('!stack-search'):
+        msg = ''
         searchterms = message.content
         searchterms = searchterms.replace('!stack-search ', '')
-        r = requests.get('https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle=' + searchterms + '&site=stackoverflow')
+        r = requests.get('https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle=' + searchterms + '&site=stackoverflow').text
         if len(r) > 2000:
             for i in range(0, 1999):
                 msg += r[i]
