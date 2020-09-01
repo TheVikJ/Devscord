@@ -69,4 +69,4 @@ We learnt a decent amount of Javascript this weekend before switching to Python,
 We actually had never used these packages to their true extent before and it was actually very stressful, yet rewarding to see them work in our project.
 
 ## What's next for Devscord
-We have one plan that we wanted to achieve this weekend but didn't have enough time to. That was searching GitHub for repositories that would pertain to your topic. We also would've liked to add a chatbot that could act as a mentor or helper for your Hackathon journey.
+We have one plan that we wanted to achieve this weekend but didn't have enough time to. That was searching GitHub for repositories that would pertain to your topic. We also would've liked to add a chatbot that could act as a mentor or helper for your Hackathon journey. Lastly, we're working on hosting the bot with Heroku so that anyone can add Devscord to their server.
